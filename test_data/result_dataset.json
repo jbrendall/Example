@@ -1,0 +1,48 @@
+{
+  "relation_name": "my_relation",
+  "attributes": [
+    [
+      "numeric_att",
+      "numeric",
+      "numeric description",
+      null
+    ],
+    [
+      "string_att",
+      "string",
+      "string description\nmulti line",
+      null
+    ],
+    [
+      "nominal_att",
+      "nominal",
+      "nominal description",
+      [
+        "linked",
+        "non_linked"
+      ]
+    ]
+  ],
+  "values": [
+    [
+      null,
+      null,
+      null
+    ],
+    [
+      1,
+      "spojit",
+      "linked"
+    ],
+    [
+      1,
+      null,
+      "non_linked"
+    ],
+    [
+      -5,
+      "ä string",
+      null
+    ]
+  ]
+}

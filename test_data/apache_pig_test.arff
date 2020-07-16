@@ -1,0 +1,124 @@
+@RELATION "apache_pig_improvement test set"
+
+
+% XX just for orientation
+@ATTRIBUTE  sample_id                                           numeric
+
+% 00: just for orientation
+@ATTRIBUTE  commit_hash                                         string
+
+% 01: just for orientation
+@ATTRIBUTE  issue_id                                            string
+
+% 03: committer of the change set
+@ATTRIBUTE  commit_user_id                                      numeric
+
+% 04: assignee of the issues
+@ATTRIBUTE  issue_user_id                                       numeric
+
+% 05: are committer and assignee the same person
+@ATTRIBUTE  assignee_is_committer                               {t,f}
+
+% 06: issue and commit existed at same time, i.e
+@ATTRIBUTE  is_commit_within_issue_lifetime                     {t,f}
+
+% 07: time difference in seconds to a previous commit,
+%     that was linked to the same issue [seconds]
+@ATTRIBUTE  previous_commit_time_difference                     numeric
+
+% 08: Was the previous to the same issue 'close'
+@ATTRIBUTE  previous_commit_is_close                            {t,f}
+
+% 09: resource overlap to previous commit,
+%     that was linked to the same issue
+@ATTRIBUTE  previous_commit_resource_overlap                    numeric
+
+% 10: the committer of the previous commit linked
+%     to this issue is the current committer
+@ATTRIBUTE  previous_commit_is_same_user                        {t,f}
+
+% 11: number of existing links to the issue at commit time
+%     (excluding this commit, if it is linked)
+@ATTRIBUTE  number_existing_links_to_issue_at_commit_time       numeric
+
+% 12: number of open issues at commit time
+@ATTRIBUTE  number_of_open_issues_at_commit_time                numeric
+
+% 13: number of open issues at commit time assigned to committer
+@ATTRIBUTE  number_of_open_issues_at_commit_time_for_committer  numeric
+
+% 14: seconds between issue creation and commit time [seconds]
+%
+%      Issue life time: A ... B
+%      Commit time    : X
+%
+%      -A------X------------B-----> time
+%       |<---->|
+%         X - A
+%
+@ATTRIBUTE  time_diff_issue_creation_and_commit                 numeric
+
+% 15: seconds between the commit time and resolve of the issue
+%
+%      Issue life time: A ... B
+%      Commit time    : X
+%
+%      -A------X------------B-----> time
+%              |<---------->|
+%                   B - X
+%
+@ATTRIBUTE  time_diff_commit_and_issue_resolve                  numeric
+
+
+% 16: commit occurred close to issue resolution
+%
+%      Issue life time: A ... B
+%      Commit time    : X
+%
+%      -A-----------X------B------X---------> time
+%                   |<---->|<---->|
+%
+%          abs(B-X) < tolerance
+%
+@ATTRIBUTE  is_committed_close_to_issue_resolve                 {t,f}
+
+
+% 17: time difference in seconds to a next commit,
+%     that was linked to the same issue [seconds]
+@ATTRIBUTE  next_commit_time_difference                        numeric
+
+% 18: Is the next commit to the same issue 'close'
+@ATTRIBUTE  next_commit_is_close                               {t,f}
+
+% 19: resource overlap to next commit,
+%     that was linked to the same issue
+@ATTRIBUTE  next_commit_resource_overlap                        numeric
+
+% 20: the committer of the previous commit linked
+%     to this issue is the current committer
+@ATTRIBUTE  next_commit_is_same_user                            {t,f}
+
+% 30: maximum similarity of the source code files of  commit
+%     to the issue using LSI
+@ATTRIBUTE  max_sim_code_to_issue_lsi                           numeric
+
+% 30: maximum similarity of the source code files of  commit
+%     to the issue using VSM with NGram
+@ATTRIBUTE  max_sim_code_to_issue_vsm_ngram                     numeric
+
+% 32: similarity of commit message to issue using VSM with NGram
+@ATTRIBUTE  sim_commit_to_issue_vsm_ngram                       numeric
+
+% 40: Trace similarity metric
+@ATTRIBUTE  max_trace_similarity                                numeric
+
+% 99: Ground truth. is this commit linked to the issue
+@ATTRIBUTE  class                                               {linked,non_linked}
+
+@DATA
+1,96e6b08bc6ac395fe0bcfe06d7c9dde58ff48fd4,PIG-3542,6,4,f,t,?,?,?,?,0,1,0,27177,33,t,?,?,?,?,0.00000000,0.00000000,?,0.0,linked
+2,c03d9fedc01031d0706eb6b0c4b4f8fda39d69b6,PIG-3558,2,3,f,t,?,?,?,?,0,2,0,1109066,21458573,f,21458447,f,0.000,f,0.00000000,0.00000000,?,0.0,non_linked
+3,c03d9fedc01031d0706eb6b0c4b4f8fda39d69b6,PIG-3569,2,0,f,t,?,?,?,?,0,2,0,90680,94,t,?,?,?,?,0.00000000,0.00000000,?,0.0,?
+4,b609216befda834cc57763ff28a96caf0aafa530,PIG-3558,28,3,f,t,?,?,?,?,0,1,0,3636882,18930757,f,18930631,f,0.000,f,0.00000000,0.00000000,?,0.0,?
+5,987e26afefab9f5a58c8f3eb70d73e87a4a2a443,PIG-3558,6,3,f,t,?,?,?,?,0,1,0,20683968,1883671,f,1883545,f,0.000,t,0.00000000,0.00000000,?,0.0,?
+6,96cae7cc2b9a26577f102e555466d4ecd1b256d1,PIG-3558,6,3,f,t,?,?,?,?,0,1,0,22567513,126,t,?,?,?,?,0.00000000,0.00000000,?,0.0,?
